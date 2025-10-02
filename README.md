@@ -85,7 +85,7 @@ python geocoder.py "London, UK"
 
 1. **Start the MCP server:**
    ```bash
-   python simple_mcp_server.py
+   python mcp_server.py
    ```
 
 2. **Configure your MCP client** (e.g., in `mcp_config.json`):
@@ -94,7 +94,7 @@ python geocoder.py "London, UK"
      "mcpServers": {
        "location-grid-geocoder": {
          "command": "python",
-         "args": ["/path/to/simple_mcp_server.py"],
+         "args": ["/path/to/mcp_server.py"],
          "env": {
            "PYTHONPATH": "/path/to/location-grid-mcp"
          }
@@ -240,7 +240,7 @@ Create or update your MCP client configuration file:
   "mcpServers": {
     "location-grid-geocoder": {
       "command": "python",
-      "args": ["/path/to/simple_mcp_server.py"],
+      "args": ["/path/to/mcp_server.py"],
       "env": {
         "PYTHONPATH": "/path/to/location-grid-mcp"
       }
@@ -351,7 +351,7 @@ Error: Container failed to start
 Error: MCP server not responding
 ```
 **Solution:**
-- Verify the server is running: `python simple_mcp_server.py`
+- Verify the server is running: `python mcp_server.py`
 - Check MCP configuration file
 - Ensure correct file paths in configuration
 
@@ -399,7 +399,7 @@ location-grid-mcp/
 ├── logs/                         # Application logs
 ├── backups/                      # Database backups
 ├── geocoder.py                   # Core geocoding library
-├── simple_mcp_server.py          # MCP server implementation
+├── mcp_server.py                 # MCP server implementation
 ├── mcp_config.json              # MCP client configuration
 ├── requirements.txt              # Python dependencies
 ├── Dockerfile                    # Docker image definition
@@ -421,7 +421,7 @@ location-grid-mcp/
    python geocoder.py "Test Location"
    
    # Test MCP server
-   python simple_mcp_server.py
+   python mcp_server.py
    
    # Test Docker deployment
    docker-compose up --build

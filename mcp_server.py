@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Simple MCP Server for Location Grid Geocoder
+MCP Server for Location Grid Geocoder
 
-This is a simplified MCP server that should work without initialization issues.
+This is the main MCP server that provides location grid geocoding functionality.
 """
 
 import asyncio

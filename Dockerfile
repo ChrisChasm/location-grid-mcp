@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application files
 COPY geocoder.py .
-COPY simple_mcp_server.py .
+COPY mcp_server.py .
 COPY db/ ./db/
 
 # Create logs directory
@@ -32,7 +32,7 @@ EXPOSE 8000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import simple_mcp_server; print('MCP server is healthy')" || exit 1
+    CMD python -c "import mcp_server; print('MCP server is healthy')" || exit 1
 
 # Run the MCP server
-CMD ["python", "simple_mcp_server.py"]
+CMD ["python", "mcp_server.py"]

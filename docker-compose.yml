@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
     # Health check
     healthcheck:
-      test: ["CMD", "python", "-c", "import simple_mcp_server; print('MCP server is healthy')"]
+      test: ["CMD", "python", "-c", "import mcp_server; print('MCP server is healthy')"]
       interval: 30s
       timeout: 10s
       retries: 3
