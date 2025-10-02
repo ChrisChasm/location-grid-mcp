@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  location-grid-mcp:
+    build: .
+    container_name: location-grid-mcp-server
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Mount the database directory for persistence
+      - ./db:/app/db
+      # Mount logs directory
+      - ./logs:/app/logs
+    # Keep container running
+    stdin_open: true
+    tty: true
+    # Restart policy
+    restart: unless-stopped
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import simple_mcp_server; print('MCP server is healthy')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Optional: Add a database backup service
+  db-backup:
+    image: alpine:latest
+    container_name: location-grid-db-backup
+    volumes:
+      - ./db:/backup/db
+      - ./backups:/backup/backups
+    command: |
+      sh -c "
+        while true; do
+          sleep 3600
+          timestamp=$$(date +%Y%m%d_%H%M%S)
+          cp /backup/db/location_grid.db /backup/backups/location_grid_$${timestamp}.db
+          echo 'Database backed up at $$timestamp'
+        done
+      "
+    restart: unless-stopped
+    depends_on:
+      - location-grid-mcp
