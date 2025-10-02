@@ -1,105 +1,26 @@
-# Location Grid MCP Server
+# Location Grid Geocoder
 
-A Model Context Protocol (MCP) server that provides geocoding functionality with location grid database lookup. This server exposes geocoding tools to AI assistants and LLMs, allowing them to convert addresses to coordinates and find corresponding grid IDs.
+A Python geocoder that combines Nominatim geocoding with location grid database lookup to return coordinates and grid IDs in JSON format.
 
 ## Features
 
-- **MCP Server**: Full Model Context Protocol server implementation
 - **Address Geocoding**: Convert addresses to longitude, latitude coordinates using Nominatim
 - **Grid ID Lookup**: Find corresponding grid IDs from a location grid database
-- **AI Integration**: Works with LM Studio, Claude Desktop, and other MCP-compatible clients
-- **Docker Support**: Containerized deployment with Docker and Docker Compose
 - **JSON Output**: Returns results in clean JSON format with `lng`, `lat`, and `grid_id`
 - **Error Handling**: Comprehensive error handling with JSON error responses
 - **SQLite Integration**: Uses SQLite database for efficient grid ID lookups
 
 ## Installation
 
-### Prerequisites
-- Python 3.8+ 
-- Internet connection (for Nominatim API)
-- SQLite database file (`db/location_grid.db`)
-
-### Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### Docker Installation (Recommended)
-```bash
-# Build the Docker image
-./docker-build.sh
-
-# Run with Docker Compose
-./docker-run.sh
-```
+1. Clone or download this repository
+2. Ensure you have Python 3.6+ installed
+3. The required dependencies are part of Python's standard library:
+   - `sqlite3`
+   - `json`
+   - `urllib`
+   - `math`
 
 ## Usage
-
-### MCP Server Usage
-
-The server exposes two main tools:
-
-#### 1. `geocode_address`
-Convert addresses to coordinates and grid ID.
-
-**Parameters:**
-- `address` (string): The address or location name to geocode
-
-**Example:**
-```json
-{
-  "address": "New York City"
-}
-```
-
-#### 2. `geocode_coordinates`
-Get grid ID for specific coordinates.
-
-**Parameters:**
-- `longitude` (number): Longitude coordinate
-- `latitude` (number): Latitude coordinate
-
-**Example:**
-```json
-{
-  "longitude": -74.0060152,
-  "latitude": 40.7127281
-}
-```
-
-### AI Client Integration
-
-#### LM Studio Configuration
-```json
-{
-  "mcpServers": {
-    "location-grid-geocoder": {
-      "command": "python",
-      "args": ["/path/to/location-grid-mcp/mcp_server.py"],
-      "env": {
-        "PYTHONPATH": "/path/to/location-grid-mcp"
-      }
-    }
-  }
-}
-```
-
-#### Docker Configuration
-```json
-{
-  "mcpServers": {
-    "location-grid-geocoder": {
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i",
-        "-v", "/path/to/location-grid-mcp/db:/app/db",
-        "location-grid-mcp:latest"
-      ]
-    }
-  }
-}
-```
 
 ### Command Line Interface
 
