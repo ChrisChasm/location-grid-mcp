@@ -1,1 +1,7 @@
+# Core MCP dependencies
 mcp>=1.0.0
+
+# Additional dependencies for enhanced functionality
+psutil>=5.9.0
+watchdog>=3.0.0
+structlog>=23.0.0

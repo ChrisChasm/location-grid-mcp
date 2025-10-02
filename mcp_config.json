@@ -1,11 +1,1 @@
-{
-  "mcpServers": {
-    "location-grid-geocoder": {
-      "command": "python",
-      "args": ["/Users/chris/Documents/MCP_SERVERS/location-grid-mcp/simple_mcp_server.py"],
-      "env": {
-        "PYTHONPATH": "/Users/chris/Documents/MCP_SERVERS/location-grid-mcp"
-      }
-    }
-  }
-}
+ 
