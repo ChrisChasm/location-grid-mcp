@@ -123,10 +123,51 @@ class SimpleGeocoder:
                     latitude = float(result['lat'])
                     return (longitude, latitude)
                 
+                # If no results, try fallback geocoding with city/state/country only
+                fallback_address = self._extract_city_state_country(address)
+                if fallback_address and fallback_address != address:
+                    print(f"Trying fallback geocoding for: {fallback_address}")
+                    return self._geocode_with_nominatim(fallback_address)
+                
                 return None
                 
         except Exception as e:
             print(f"Nominatim geocoding error: {e}")
+            return None
+    
+    def _extract_city_state_country(self, address: str) -> Optional[str]:
+        """
+        Extract city, state, and country from a full address by removing street address.
+        
+        Args:
+            address: Full address string
+            
+        Returns:
+            City, state, country string or None if extraction fails
+        """
+        try:
+            # Split address by commas to get components
+            parts = [part.strip() for part in address.split(',')]
+            
+            if len(parts) >= 2:
+                # Take everything except the first part (street address)
+                city_state_country = ', '.join(parts[1:])
+                return city_state_country
+            
+            # If no commas, try to extract by common patterns
+            # Look for patterns like "City, State ZIP" or "City, State"
+            import re
+            
+            # Pattern for "City, State ZIP" or "City, State"
+            pattern = r'^[^,]*,\s*([^,]+(?:,\s*[^,]+)*)'
+            match = re.search(pattern, address)
+            if match:
+                return match.group(1).strip()
+            
+            return None
+            
+        except Exception as e:
+            print(f"Error extracting city/state/country from address: {e}")
             return None
     
     def _get_grid_id_by_coordinates(self, longitude: float, latitude: float) -> Optional[int]:

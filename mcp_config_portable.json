@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "location-grid-geocoder": {
+      "command": "./start_mcp.sh"
+    }
+  }
+}
